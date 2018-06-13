@@ -1,4 +1,4 @@
-package org.hopto.nino.inventory;
+package org.hopto.nino.inventory.Entities;
 
 /**
  * Class Korisnik
@@ -9,12 +9,12 @@ public class Korisnik {
   // Fields
   //
 
-  public String username;
+  private String username;
   private String password;
   private String ime;
   private String prezime;
   private String email;
-  private int broj_telefona;
+  private int brojTelefona;
   
   //
   // Constructors
@@ -34,7 +34,7 @@ public class Korisnik {
    * Set the value of username
    * @param newVar the new value of username
    */
-  public void setUsername (String newVar) {
+  public void SetUsername (String newVar) {
     username = newVar;
   }
 
@@ -42,7 +42,7 @@ public class Korisnik {
    * Get the value of username
    * @return the value of username
    */
-  public String getUsername () {
+  public String GetUsername () {
     return username;
   }
 
@@ -115,15 +115,15 @@ public class Korisnik {
    * @param newVar the new value of broj_telefona
    */
   private void setBroj_telefona (int newVar) {
-    broj_telefona = newVar;
+    brojTelefona = newVar;
   }
 
   /**
    * Get the value of broj_telefona
    * @return the value of broj_telefona
    */
-  private int getBroj_telefona () {
-    return broj_telefona;
+  private int getBrojTelefona () {
+    return brojTelefona;
   }
 
   //
@@ -132,7 +132,7 @@ public class Korisnik {
 
   /**
    */
-  public void prikaz_kor()
+  public void PrikazKor()
   {
   }
 

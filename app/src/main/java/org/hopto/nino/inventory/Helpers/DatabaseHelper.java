@@ -1,4 +1,4 @@
-package org.hopto.nino.inventory;
+package org.hopto.nino.inventory.Helpers;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -15,10 +15,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private static final String DATABASE_NAME="inventura.db";
     private static final int DATABASE_VERSION = 1;
     private final Context context;
-    SQLiteDatabase db;
+    protected SQLiteDatabase db;
 
-    private static final String DATABASE_PATH = "/data/data/org.hopto.nino.inventory/databases/";
-    private final String USER_TABLE = "korisnik";
+    private static final String DATABASE_PATH = "data/data/org.hopto.nino.inventory/databases/";
+
 
 
     public DatabaseHelper(Context context) {
@@ -47,9 +47,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     private boolean checkDbExist() {
         SQLiteDatabase sqLiteDatabase = null;
 
-        String path = DATABASE_PATH + DATABASE_NAME;
-        sqLiteDatabase = SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.OPEN_READONLY);
-
+        try {
+            String path = DATABASE_PATH + DATABASE_NAME;
+            sqLiteDatabase = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
+        }
+        catch (Exception e)
+        {}
                 if (sqLiteDatabase != null){
             sqLiteDatabase.close();
             return true;
@@ -80,8 +83,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         }
     }
 
-    private SQLiteDatabase openDatabase(){
+    protected SQLiteDatabase openDatabase(){
         String path = DATABASE_PATH + DATABASE_NAME;
+        SQLiteDatabase.releaseMemory();
         db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READWRITE);
         return db;
     }
@@ -91,25 +95,4 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             db.close();
         }
     }
-
-    public boolean checkUserExist(String username, String password){
-        String[] columns = {"username"};
-        db = openDatabase();
-
-        String selection = "username = ? and password = ?";
-        String[] selectionArgs = {username, password};
-
-        Cursor cursor = db.query(USER_TABLE, columns, selection, selectionArgs, null, null,null);
-        int count = cursor.getCount();
-
-        cursor.close();
-        close();
-
-        if (count > 0){
-            return true;
-        } else {
-            return false;
-
-        }
     }
-}

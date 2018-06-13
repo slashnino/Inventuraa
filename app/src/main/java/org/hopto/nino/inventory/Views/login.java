@@ -1,4 +1,4 @@
-package org.hopto.nino.inventory;
+package org.hopto.nino.inventory.Views;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.hopto.nino.inventory.Engines.LoginEngine;
+import org.hopto.nino.inventory.Helpers.DatabaseHelper;
+import org.hopto.nino.inventory.R;
+
 public class login extends AppCompatActivity {
 
   Button btn_login;
   EditText et_username;
   EditText et_password;
-  DatabaseHelper databaseHelper;
+  LoginEngine databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +28,7 @@ public class login extends AppCompatActivity {
         et_username = (EditText) findViewById(R.id.et_username);
         et_password =  (EditText) findViewById(R.id.et_password);
 
-        databaseHelper = new DatabaseHelper(login.this);
+        databaseHelper = new LoginEngine(login.this);
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,9 +39,10 @@ public class login extends AppCompatActivity {
                     Intent intent = new Intent(login.this, menu.class);
                     intent.putExtra ("username", et_username.getText().toString());
                     startActivity(intent);
-                }else
+                }else {
                     et_password.setText(null);
-                Toast.makeText(login.this, "Neuspješno logiranje. Krivi username ili password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(login.this, "Neuspješno logiranje. Krivi username ili password", Toast.LENGTH_SHORT).show();
+                }
             }
         });
    }
